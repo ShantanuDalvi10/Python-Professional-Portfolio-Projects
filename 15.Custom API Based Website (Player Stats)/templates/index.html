@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Stats</title>
+   <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cricket Player Statistics</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="alert
+                        {% if category == 'success' %}
+                            alert-success
+                        {% else %}
+                            alert-danger
+                        {% endif %}
+                        " role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+        <p class="subtitle">Search for the stats of Cricket Player</p>
+
+        <form class="search-form" action="{{url_for('stats.search_player')}}"method="POST">
+            <input
+            type="text" name="player-name" placeholder="Enter Player Name">
+            <button type="submit">
+                Search
+            </button>
+        </form>
+        {% if player_data %}
+        <div class="stats-card">
+            <h2>{{player_data["Player Name"]}}</h2>
+            <div class="stats-container">
+            <div class="stat-box">
+                <h3>ODI</h3>
+                <p>Matches: {{player_data["ODI Matches"]}}</p>
+                <p>Runs:{{player_data["ODI Runs"]}} </p>
+            </div>
+            <div class="stat-box">
+                <h3>Test</h3>
+                <p>Matches: {{player_data["Test Matches"]}}</p>
+                <p>Runs: {{player_data["Test Runs"]}}</p>
+            </div>
+            <div class="stat-box">
+                <h3>T20I</h3>
+                <p>Matches: {{player_data["T20 Matches"]}}</p>
+                <p>Runs: {{player_data["T20 Runs"]}}</p>
+            </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+
+
+</body>
+</html>
